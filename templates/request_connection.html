@@ -1,0 +1,43 @@
+{% extends 'user_layout.html' %}
+{% block title %}Request Connection{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Request Water Connection</h1><p>Apply for a new water connection</p></div>
+  <a href="/user_dashboard" class="btn btn-outline-blue"><i class="fas fa-arrow-left"></i> Back</a>
+</div>
+<div class="card" style="max-width:600px;">
+  <div class="card-head"><h3><i class="fas fa-plug" style="color:#7c3aed;"></i> Connection Request</h3></div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}{% for cat,msg in messages %}
+    <div class="flash-msg flash-{{ cat }}"><i class="fas fa-exclamation-circle"></i> {{ msg }}</div>
+    {% endfor %}{% endif %}
+  {% endwith %}
+
+  {% if has_connection %}
+  <div class="flash-msg flash-warning">
+    <i class="fas fa-exclamation-triangle"></i> You already have a water connection. Only one connection is allowed per account.
+  </div>
+  {% else %}
+  <form method="POST">
+    <div class="field-group">
+      <label class="field-label">Connection Type</label>
+      <select name="connection_type" class="field-input" required>
+        <option value="">Select type</option>
+        <option value="Domestic">Domestic</option>
+        <option value="Commercial">Commercial</option>
+        <option value="Industrial">Industrial</option>
+      </select>
+    </div>
+    <div style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:10px;padding:12px;margin-bottom:1.25rem;font-size:0.82rem;color:#7c3aed;">
+      <i class="fas fa-info-circle"></i> A meter number will be auto-generated after submission. Your request will be reviewed within 5–7 working days.
+    </div>
+    <div style="display:flex;gap:1rem;">
+      <button type="submit" class="btn btn-blue" style="flex:1;justify-content:center;padding:12px;background:linear-gradient(135deg,#7c3aed,#5b21b6);"><i class="fas fa-paper-plane"></i> Submit Request</button>
+      <a href="/user_dashboard" class="btn btn-outline-blue" style="padding:12px 20px;">Cancel</a>
+    </div>
+  </form>
+  {% endif %}
+
+</div>
+{% endblock %}

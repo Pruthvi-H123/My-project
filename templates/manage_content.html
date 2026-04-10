@@ -1,0 +1,20 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Manage Content — Admin{% endblock %}
+{% block content %}
+<div class="topbar"><div class="page-title"><h1>Manage Content</h1><p>Update About and Contact page content</p></div></div>
+{% with messages = get_flashed_messages() %}{% if messages %}{% for msg in messages %}<div class="flash-msg flash-success"><i class="fas fa-check-circle"></i> {{ msg }}</div>{% endfor %}{% endif %}{% endwith %}
+<div class="card" style="max-width:700px;">
+  <div class="card-head"><h3><i class="fas fa-newspaper" style="color:#0e63d2;"></i> Update Page Content</h3></div>
+  <form method="POST" action="/manage_content">
+    <div class="field-group">
+      <label class="field-label">About Page Content</label>
+      <textarea name="about" class="field-input" rows="5">{{ about_content }}</textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Contact Page Content</label>
+      <textarea name="contact" class="field-input" rows="5">{{ contact_content }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-blue" style="width:100%;justify-content:center;padding:12px;"><i class="fas fa-save"></i> Save Content</button>
+  </form>
+</div>
+{% endblock %}

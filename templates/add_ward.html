@@ -1,0 +1,17 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Add Ward — Admin{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Add New Ward</h1><p>Create a new ward</p></div>
+  <a href="/manage_wards" class="btn btn-outline-blue"><i class="fas fa-arrow-left"></i> Back</a>
+</div>
+<div class="card" style="max-width:500px;">
+  <div class="card-head"><h3><i class="fas fa-plus" style="color:#0e63d2;"></i> Ward Details</h3></div>
+  <form method="POST" action="/add_ward">
+    <div class="field-group"><label class="field-label">Ward Name</label><input type="text" name="ward_name" class="field-input" placeholder="e.g. Gadag Ward 1" required/></div>
+    <div class="field-group"><label class="field-label">Population</label><input type="number" name="population" class="field-input" placeholder="e.g. 5000" required/></div>
+    <button type="submit" class="btn btn-blue" style="width:100%;justify-content:center;padding:12px;"><i class="fas fa-save"></i> Save Ward</button>
+  </form>
+</div>
+{% endblock %}
+ENDOFFILE

@@ -1,0 +1,48 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Connections — Admin{% endblock %}
+{% block content %}
+<div class="topbar"><div class="page-title"><h1>Water Connections</h1><p>Manage citizen water connections</p></div></div>
+<div class="card">
+  <div class="card-head"><h3><i class="fas fa-plug" style="color:#7c3aed;"></i> All Connections</h3></div>
+  {% if connections %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Citizen</th><th>Type</th><th>Meter No.</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>{% for c in connections %}<tr>
+      <td style="color:#9ab0cc;">{{ c.connection_id }}</td>
+      <td style="font-weight:600;">{{ c.name }}</td>
+      <td>{{ c.connection_type }}</td>
+      <td style="color:#0e63d2;">{{ c.meter_number }}</td>
+      <td>{{ c.connection_date }}</td>
+      <td>
+        {% set status = c.connection_status|lower %}
+        {% if status == 'approved' %}
+          <span class="badge badge-approved"><i class="fas fa-check-circle"></i> Approved</span>
+        {% elif status == 'rejected' %}
+          <span class="badge badge-rejected"><i class="fas fa-times-circle"></i> Rejected</span>
+        {% elif status == 'pending' %}
+          <span class="badge badge-pending"><i class="fas fa-clock"></i> Pending</span>
+        {% else %}
+          <span class="badge badge-pending">{{ c.connection_status }}</span>
+        {% endif %}
+      </td>
+      <td style="display:flex;gap:6px;">
+        {% set status = c.connection_status|lower %}
+        {% if status == 'pending' %}
+          <a href="/approve_connection/{{ c.connection_id }}" class="btn btn-green btn-sm"><i class="fas fa-check"></i> Approve</a>
+          <a href="/reject_connection/{{ c.connection_id }}" class="btn btn-red btn-sm"><i class="fas fa-times"></i> Reject</a>
+        {% elif status == 'approved' %}
+          <span style="color:#00b48c;font-size:0.8rem;font-weight:600;"><i class="fas fa-check-circle"></i> Approved</span>
+        {% elif status == 'rejected' %}
+          <a href="/approve_connection/{{ c.connection_id }}" class="btn btn-green btn-sm"><i class="fas fa-redo"></i> Re-Approve</a>
+        {% else %}
+          <a href="/approve_connection/{{ c.connection_id }}" class="btn btn-green btn-sm"><i class="fas fa-check"></i> Approve</a>
+          <a href="/reject_connection/{{ c.connection_id }}" class="btn btn-red btn-sm"><i class="fas fa-times"></i> Reject</a>
+        {% endif %}
+      </td>
+    </tr>{% endfor %}</tbody>
+  </table></div>
+  {% else %}
+  <div class="empty-state"><i class="fas fa-plug"></i><p>No connection requests yet.</p></div>
+  {% endif %}
+</div>
+{% endblock %}

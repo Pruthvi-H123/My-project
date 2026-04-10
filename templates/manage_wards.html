@@ -1,0 +1,28 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Manage Wards — Admin{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Manage Wards</h1><p>Add and manage ward details</p></div>
+  <a href="/add_ward_page" class="btn btn-blue"><i class="fas fa-plus"></i> Add Ward</a>
+</div>
+{% with messages = get_flashed_messages() %}{% if messages %}{% for msg in messages %}<div class="flash-msg flash-success"><i class="fas fa-check-circle"></i> {{ msg }}</div>{% endfor %}{% endif %}{% endwith %}
+<div class="card">
+  <div class="card-head"><h3><i class="fas fa-map-marker-alt" style="color:#0e63d2;"></i> All Wards</h3></div>
+  {% if wards %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Ward Name</th><th>Population</th><th>Actions</th></tr></thead>
+    <tbody>{% for w in wards %}<tr>
+      <td style="color:#9ab0cc;">{{ w.ward_id }}</td>
+      <td style="font-weight:600;">{{ w.ward_name }}</td>
+      <td>{{ w.population or '—' }}</td>
+      <td style="display:flex;gap:6px;">
+        <a href="/edit_ward/{{ w.ward_id }}" class="btn btn-outline-blue btn-sm"><i class="fas fa-edit"></i> Edit</a>
+        <a href="/delete_ward/{{ w.ward_id }}" class="btn btn-red btn-sm" onclick="return confirm('Delete this ward?')"><i class="fas fa-trash"></i></a>
+      </td>
+    </tr>{% endfor %}</tbody>
+  </table></div>
+  {% else %}
+  <div class="empty-state"><i class="fas fa-map"></i><p>No wards added yet.</p></div>
+  {% endif %}
+</div>
+{% endblock %}

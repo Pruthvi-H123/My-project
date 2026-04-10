@@ -1,0 +1,42 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Manage Bills — Admin{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Water Bills</h1><p>All generated bills</p></div>
+  <a href="/admin/generate_bill" class="btn btn-blue"><i class="fas fa-plus"></i> Generate Bill</a>
+</div>
+
+<div class="admin-stats" style="grid-template-columns:repeat(4,1fr);">
+  <div class="s-card" style="--sc:#0e63d2;"><div class="s-icon" style="background:rgba(14,99,210,0.1);color:#0e63d2;"><i class="fas fa-file-invoice"></i></div><div class="s-val">{{ total }}</div><div class="s-lbl">Total Bills</div></div>
+  <div class="s-card" style="--sc:#dc3232;"><div class="s-icon" style="background:rgba(220,50,50,0.1);color:#dc3232;"><i class="fas fa-exclamation-circle"></i></div><div class="s-val">{{ unpaid }}</div><div class="s-lbl">Unpaid</div></div>
+  <div class="s-card" style="--sc:#00b48c;"><div class="s-icon" style="background:rgba(0,180,140,0.1);color:#00b48c;"><i class="fas fa-check-circle"></i></div><div class="s-val">{{ paid }}</div><div class="s-lbl">Paid</div></div>
+  <div class="s-card" style="--sc:#7c3aed;"><div class="s-icon" style="background:rgba(124,58,237,0.1);color:#7c3aed;"><i class="fas fa-rupee-sign"></i></div><div class="s-val">₹{{ total_amount }}</div><div class="s-lbl">Collected</div></div>
+</div>
+
+<div class="card">
+  <div class="card-head"><h3><i class="fas fa-file-invoice-dollar" style="color:#0e63d2;"></i> All Bills</h3></div>
+  {% if bills %}
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Citizen</th><th>Month</th><th>Meter No.</th><th>Units</th><th>Amount</th><th>Due Date</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for b in bills %}
+        <tr>
+          <td style="color:#9ab0cc;">{{ b.bill_id }}</td>
+          <td><p style="font-weight:600;">{{ b.name }}</p><p style="font-size:0.75rem;color:#888;">{{ b.phone }}</p></td>
+          <td style="font-weight:600;">{{ b.billing_month }}</td>
+          <td style="font-size:0.8rem;color:#6a7f9a;">{{ b.meter_number or '—' }}</td>
+          <td>{{ b.total_units }} kL</td>
+          <td style="font-weight:700;color:#0e63d2;">₹{{ b.amount_due }}</td>
+          <td>{{ b.due_date }}</td>
+          <td><span class="badge badge-{{ b.bill_status|lower }}">{{ b.bill_status }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state"><i class="fas fa-file-invoice"></i><p>No bills generated yet.</p></div>
+  {% endif %}
+</div>
+{% endblock %}

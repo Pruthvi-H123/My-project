@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Admin — Gadag Water Supply{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+<div class="layout">
+  {% include 'admin_sidebar.html' %}
+  <div class="main">
+
+    <!-- ── TOP NAVBAR ── -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:#fff;border-radius:16px;margin-bottom:1.5rem;box-shadow:0 2px 15px rgba(0,0,0,0.06);border:1px solid #f0f4ff;">
+      <!-- Left: Page greeting -->
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#f0a000,#c07000);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.9rem;">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <div>
+          <p style="font-size:0.7rem;color:#9ab0cc;text-transform:uppercase;letter-spacing:1px;font-weight:600;">Admin Panel</p>
+          <p style="font-size:0.875rem;font-weight:700;color:#0a1628;">Welcome, {{ session.name or 'Admin' }}!</p>
+        </div>
+      </div>
+      <!-- Right: Profile & Logout -->
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <!-- Profile Button -->
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:#f8faff;border-radius:10px;border:1px solid #e8eef8;">
+          <div style="width:32px;height:32px;background:linear-gradient(135deg,#f0a000,#c07000);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.85rem;">
+            {{ (session.name or 'A')[0].upper() }}
+          </div>
+          <div>
+            <p style="font-size:0.82rem;font-weight:700;color:#0a1628;">{{ session.name or 'Admin' }}</p>
+            <p style="font-size:0.68rem;color:#9ab0cc;">Administrator</p>
+          </div>
+        </div>
+        <!-- Logout Button -->
+        <a href="/logout" style="display:flex;align-items:center;gap:7px;padding:9px 16px;background:rgba(220,50,50,0.08);border:1.5px solid rgba(220,50,50,0.2);border-radius:10px;color:#dc3232;font-weight:700;font-size:0.82rem;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(220,50,50,0.15)'" onmouseout="this.style.background='rgba(220,50,50,0.08)'">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}{% for cat,msg in messages %}
+      <div class="flash-msg flash-{{ cat }}"><i class="fas fa-info-circle"></i>{{ msg }}</div>
+      {% endfor %}{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
+<!-- LOGOUT POPUP -->
+<div id="logoutModal" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;">
+  <div style="position:absolute;inset:0;background:rgba(10,22,40,0.6);backdrop-filter:blur(4px);" onclick="closeLogout()"></div>
+  <div style="position:relative;z-index:1;background:#fff;border-radius:20px;padding:2.5rem 2rem;max-width:400px;width:90%;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,0.25);animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
+    <div style="width:70px;height:70px;background:rgba(220,50,50,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;border:2px solid rgba(220,50,50,0.15);">
+      <i class="fas fa-sign-out-alt" style="font-size:1.6rem;color:#dc3232;"></i>
+    </div>
+    <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.2rem;color:#0a1628;margin-bottom:0.5rem;">Confirm Logout</h3>
+    <p style="color:#6a7f9a;font-size:0.9rem;line-height:1.6;margin-bottom:2rem;">Are you sure you want to logout?<br>You will need to sign in again to access the admin panel.</p>
+    <div style="display:flex;gap:0.75rem;justify-content:center;">
+      <button onclick="closeLogout()" style="flex:1;padding:12px 20px;border-radius:12px;border:1.5px solid #e0eaf5;background:#fff;color:#4a5f80;font-weight:600;cursor:pointer;font-size:0.9rem;font-family:'Inter',sans-serif;">
+        <i class="fas fa-times"></i> Cancel
+      </button>
+      <a href="/logout" id="confirmLogoutBtn" style="flex:1;padding:12px 20px;border-radius:12px;background:linear-gradient(135deg,#dc3232,#a01010);color:#fff;font-weight:700;text-decoration:none;font-size:0.9rem;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 15px rgba(220,50,50,0.3);">
+        <i class="fas fa-sign-out-alt"></i> Yes, Logout
+      </a>
+    </div>
+  </div>
+</div>
+<style>
+@keyframes popIn {
+  from { opacity:0; transform:scale(0.85) translateY(20px); }
+  to { opacity:1; transform:scale(1) translateY(0); }
+}
+</style>
+<script>
+function openLogout() { document.getElementById('logoutModal').style.display = 'flex'; }
+function closeLogout() { document.getElementById('logoutModal').style.display = 'none'; }
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('a[href="/logout"]').forEach(function(link) {
+    if (link.id !== 'confirmLogoutBtn') {
+      link.addEventListener('click', function(e) { e.preventDefault(); openLogout(); });
+    }
+  });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLogout(); });
+});
+</script>
+
+</body>
+</html>

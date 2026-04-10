@@ -1,0 +1,82 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Add Supply Schedule — Admin{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Supply Schedule</h1><p>Manage ward-wise water supply timings</p></div>
+  <a href="/admin/dashboard" class="btn btn-outline-blue"><i class="fas fa-arrow-left"></i> Back</a>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+  <div class="card">
+    <div class="card-head"><h3><i class="fas fa-plus-circle" style="color:#0e63d2;"></i> Add New Schedule</h3></div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}{% for cat,msg in messages %}
+      <div class="flash-msg flash-{{ cat }}"><i class="fas fa-info-circle"></i> {{ msg }}</div>
+      {% endfor %}{% endif %}
+    {% endwith %}
+    <form method="POST">
+      <div class="field-group">
+        <label class="field-label">Select Ward</label>
+        <select name="ward_id" class="field-input" required>
+          <option value="">Choose ward...</option>
+          {% for w in wards %}
+          <option value="{{ w.ward_id }}">{{ w.ward_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Day of Week</label>
+        <select name="day_of_week" class="field-input" required>
+          <option value="">Select day...</option>
+          {% for day in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] %}
+          <option value="{{ day }}">{{ day }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="field-group">
+          <label class="field-label">Start Time</label>
+          <input type="time" name="start_time" class="field-input" required/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">End Time</label>
+          <input type="time" name="end_time" class="field-input" required/>
+        </div>
+      </div>
+    
+      <button type="submit" class="btn btn-blue" style="width:100%;justify-content:center;padding:13px;">
+        <i class="fas fa-plus"></i> Add Schedule
+      </button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h3><i class="fas fa-calendar-alt" style="color:#0e63d2;"></i> All Schedules</h3></div>
+    {% if schedules %}
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ward</th><th>Day</th><th>Time</th><th>Action</th></tr></thead>
+        <tbody>
+          {% for s in schedules %}
+          <tr>
+            <td style="font-weight:600;">{{ s.ward_name }}</td>
+            <td>{{ s.day_of_week }}</td>
+            <td style="font-size:0.82rem;color:#6a7f9a;">{{ s.start_time }} — {{ s.end_time }}</td>
+        
+            <td>
+              <a href="/delete_schedule/{{ s.schedule_id }}" class="btn btn-red btn-sm"
+                 onclick="return confirm('Delete this schedule?')">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state"><i class="fas fa-calendar-times"></i><p>No schedules added yet.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

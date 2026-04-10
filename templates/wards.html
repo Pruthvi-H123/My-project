@@ -1,0 +1,29 @@
+{% extends 'user_layout.html' %}
+{% block title %}Ward Schedule{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Water Supply Schedule</h1><p>Ward-wise water supply timings</p></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;">
+  {% for s in schedules %}
+  <div class="card" style="border-top:3px solid #0e63d2;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
+      <div style="width:44px;height:44px;background:rgba(14,99,210,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#0e63d2;font-size:1.1rem;flex-shrink:0;"><i class="fas fa-map-marker-alt"></i></div>
+      <div><h3 style="font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;color:#0a1628;">{{ s.ward_name }}</h3></div>
+    </div>
+    <div style="display:flex;gap:0.75rem;">
+      <div style="flex:1;background:rgba(0,180,140,0.08);border:1px solid rgba(0,180,140,0.2);border-radius:10px;padding:10px;text-align:center;">
+        <p style="font-size:0.7rem;color:#6a7f9a;text-transform:uppercase;letter-spacing:0.5px;">Day</p>
+        <p style="color:#00b48c;font-weight:700;">{{ s.supply_day }}</p>
+      </div>
+      <div style="flex:1;background:rgba(14,99,210,0.08);border:1px solid rgba(14,99,210,0.2);border-radius:10px;padding:10px;text-align:center;">
+        <p style="font-size:0.7rem;color:#6a7f9a;text-transform:uppercase;letter-spacing:0.5px;">Timing</p>
+        <p style="color:#0e63d2;font-weight:700;font-size:0.85rem;">{{ s.start_time }}–{{ s.end_time }}</p>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="empty-state" style="grid-column:1/-1;"><i class="fas fa-calendar-times"></i><p>No schedules available.</p></div>
+  {% endfor %}
+</div>
+{% endblock %}

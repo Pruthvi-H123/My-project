@@ -1,0 +1,30 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Reports — Admin{% endblock %}
+{% block content %}
+<div class="topbar"><div class="page-title"><h1>Reports & Analytics</h1><p>Overview of portal activity</p></div></div>
+<!-- Filter -->
+<div class="card" style="margin-bottom:1.5rem;">
+  <form method="POST" action="/reports" style="display:flex;align-items:flex-end;gap:1rem;flex-wrap:wrap;">
+    <div class="field-group" style="margin:0;">
+      <label class="field-label">Filter by Month</label>
+      <select name="month" class="field-input" style="width:200px;">
+        <option value="">All Months</option>
+        {% for m in months %}
+        <option value="{{ m.value }}" {% if selected_month==m.value %}selected{% endif %}>{{ m.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-blue"><i class="fas fa-filter"></i> Apply Filter</button>
+    {% if selected_month %}<a href="/reports" class="btn btn-outline-blue"><i class="fas fa-times"></i> Clear</a>{% endif %}
+  </form>
+</div>
+<!-- Stats -->
+<div class="admin-stats">
+  <div class="s-card" style="--sc:#dc3232;"><div class="s-icon" style="background:rgba(220,50,50,0.1);color:#dc3232;"><i class="fas fa-comment-dots"></i></div><div class="s-val">{{ total_complaints }}</div><div class="s-lbl">Total Complaints</div></div>
+  <div class="s-card" style="--sc:#f0a000;"><div class="s-icon" style="background:rgba(240,160,0,0.1);color:#f0a000;"><i class="fas fa-clock"></i></div><div class="s-val">{{ pending_complaints }}</div><div class="s-lbl">Pending Complaints</div></div>
+  <div class="s-card" style="--sc:#00b48c;"><div class="s-icon" style="background:rgba(0,180,140,0.1);color:#00b48c;"><i class="fas fa-plug"></i></div><div class="s-val">{{ total_connections }}</div><div class="s-lbl">Total Connections</div></div>
+  <div class="s-card" style="--sc:#7c3aed;"><div class="s-icon" style="background:rgba(124,58,237,0.1);color:#7c3aed;"><i class="fas fa-truck"></i></div><div class="s-val">{{ total_tanker }}</div><div class="s-lbl">Tanker Requests</div></div>
+  <div class="s-card" style="--sc:#0e63d2;"><div class="s-icon" style="background:rgba(14,99,210,0.1);color:#0e63d2;"><i class="fas fa-hourglass-half"></i></div><div class="s-val">{{ pending_tanker }}</div><div class="s-lbl">Pending Tankers</div></div>
+</div>
+{% endblock %}
+ENDOFFILE

@@ -1,0 +1,38 @@
+<div class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo" style="background:linear-gradient(135deg,#f0a000,#c07000);"><i class="fas fa-shield-alt"></i></div>
+    <div class="sb-title">Gadag Water<span style="color:#f0a000;">Admin Panel</span></div>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Overview</div>
+    <a href="/admin_dashboard" class="sb-link {% if request.path=='/admin_dashboard' %}active{% endif %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="/reports" class="sb-link {% if request.path=='/reports' %}active{% endif %}"><i class="fas fa-chart-bar"></i> Reports</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Management</div>
+    <a href="/manage_users" class="sb-link {% if request.path=='/manage_users' %}active{% endif %}"><i class="fas fa-users"></i> Manage Users</a>
+    <a href="/complaints" class="sb-link {% if request.path=='/complaints' %}active{% endif %}"><i class="fas fa-comment-dots"></i> Complaints</a>
+    <a href="/tanker_requests" class="sb-link {% if request.path=='/tanker_requests' %}active{% endif %}"><i class="fas fa-truck"></i> Tanker Requests</a>
+    <a href="/admin/bills" class="sb-link"><i class="fas fa-file-invoice-dollar"></i> Bills</a>
+    <a href="/admin/generate_bill" class="sb-link"><i class="fas fa-plus"></i> Generate Bill</a>
+    <a href="/admin/payments" class="sb-link"><i class="fas fa-receipt"></i> Payments</a> 
+    <a href="/admin/notifications" class="sb-link {% if request.path=='/admin/notifications' %}active{% endif %}"><i class="fas fa-bell"></i> Notifications</a>
+    <a href="/connections" class="sb-link {% if request.path=='/connections' %}active{% endif %}"><i class="fas fa-plug"></i> Connections</a>
+    <a href="/manage_wards" class="sb-link {% if request.path=='/manage_wards' %}active{% endif %}"><i class="fas fa-map-marker-alt"></i> Manage Wards</a>
+    <a href="/add_schedule" class="sb-link{% if request.path=='/water supply schedule' %}active{% endif %}"><i class="fas fa-tint"></i>Water Supply Schedule</a>
+    <a href="/manage_content" class="sb-link {% if request.path=='/manage_content' %}active{% endif %}"><i class="fas fa-newspaper"></i> Manage Content</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Account</div>
+    <a href="/logout" class="sb-link danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+  <div class="sb-user">
+    <div class="sb-user-info">
+      <div class="sb-avatar" style="background:linear-gradient(135deg,#f0a000,#c07000);">A</div>
+      <div>
+        <div class="sb-user-name">{{ session.name or 'Admin' }}</div>
+        <div class="sb-user-ward">Administrator</div>
+      </div>
+    </div>
+  </div>
+</div>

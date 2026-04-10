@@ -1,0 +1,16 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Edit Ward — Admin{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Edit Ward</h1><p>Update ward details</p></div>
+  <a href="/manage_wards" class="btn btn-outline-blue"><i class="fas fa-arrow-left"></i> Back</a>
+</div>
+<div class="card" style="max-width:500px;">
+  <div class="card-head"><h3><i class="fas fa-edit" style="color:#0e63d2;"></i> Edit Ward</h3></div>
+  <form method="POST" action="/update_ward/{{ ward.ward_id }}">
+    <div class="field-group"><label class="field-label">Ward Name</label><input type="text" name="ward_name" class="field-input" value="{{ ward.ward_name }}" required/></div>
+    <div class="field-group"><label class="field-label">Population</label><input type="number" name="population" class="field-input" value="{{ ward.population }}" required/></div>
+    <button type="submit" class="btn btn-blue" style="width:100%;justify-content:center;padding:12px;"><i class="fas fa-save"></i> Update Ward</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'user_layout.html' %}
+{% block title %}About{% endblock %}
+{% block content %}
+<div class="topbar"><div class="page-title"><h1>About</h1><p>About Gadag Water Supply Management Portal</p></div></div>
+<div class="card">
+  <div style="text-align:center;padding:2rem 0;">
+    <div style="width:80px;height:80px;background:linear-gradient(135deg,#0e63d2,#00b48c);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;margin:0 auto 1.5rem;box-shadow:0 8px 25px rgba(14,99,210,0.3);"><i class="fas fa-water"></i></div>
+    <h2 style="font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;color:#0a1628;margin-bottom:0.5rem;">Gadag City Water Supply Management Portal</h2>
+    <p style="color:#6a7f9a;font-size:0.95rem;max-width:600px;margin:0 auto 2rem;line-height:1.8;">An official digital platform by Gadag Municipal Corporation to help citizens manage all water-related services online — from paying bills to filing complaints and booking emergency tankers.</p>
+  </div>
+  <div class="three-col">
+    {% for icon,color,title,desc in [('fas fa-bullseye','#0e63d2','Our Mission','To digitize Gadag municipal water services for transparency and efficiency.'),('fa-eye fas','#00b48c','Our Vision','A fully paperless, citizen-friendly water management system for all of Gadag.'),('fas fa-heart','#dc3232','Our Values','Transparency, accountability, and excellent citizen service at all times.')] %}
+    <div style="text-align:center;padding:1.5rem;background:#f8faff;border-radius:14px;">
+      <div style="width:52px;height:52px;background:rgba(14,99,210,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:{{ color }};margin:0 auto 1rem;"><i class="{{ icon }}"></i></div>
+      <h3 style="font-family:'Sora',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:0.5rem;">{{ title }}</h3>
+      <p style="font-size:0.82rem;color:#6a7f9a;line-height:1.6;">{{ desc }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

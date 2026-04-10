@@ -1,0 +1,27 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Admin Dashboard — Gadag Water Supply{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Admin Dashboard</h1><p>Welcome back, {{ session.name }}!</p></div>
+</div>
+
+<div class="admin-stats">
+  <div class="s-card" style="--sc:#0e63d2;"><div class="s-icon" style="background:rgba(14,99,210,0.1);color:#0e63d2;"><i class="fas fa-users"></i></div><div class="s-val">{{ total_users }}</div><div class="s-lbl">Total Users</div></div>
+  <div class="s-card" style="--sc:#00b48c;"><div class="s-icon" style="background:rgba(0,180,140,0.1);color:#00b48c;"><i class="fas fa-plug"></i></div><div class="s-val">{{ total_connections }}</div><div class="s-lbl">Connections</div></div>
+  <div class="s-card" style="--sc:#dc3232;"><div class="s-icon" style="background:rgba(220,50,50,0.1);color:#dc3232;"><i class="fas fa-comment-dots"></i></div><div class="s-val">{{ total_complaints }}</div><div class="s-lbl">Total Complaints</div></div>
+  <div class="s-card" style="--sc:#f0a000;"><div class="s-icon" style="background:rgba(240,160,0,0.1);color:#f0a000;"><i class="fas fa-exclamation-circle"></i></div><div class="s-val">{{ pending_complaints }}</div><div class="s-lbl">Pending Complaints</div></div>
+  <div class="s-card" style="--sc:#7c3aed;"><div class="s-icon" style="background:rgba(124,58,237,0.1);color:#7c3aed;"><i class="fas fa-truck"></i></div><div class="s-val">{{ total_tanker }}</div><div class="s-lbl">Tanker Requests</div></div>
+</div>
+
+<div class="card">
+  <div class="card-head"><h3><i class="fas fa-bolt" style="color:#f0a000;"></i> Quick Actions</h3></div>
+  <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+    <a href="/manage_users" class="btn btn-blue"><i class="fas fa-users"></i> Manage Users</a>
+    <a href="/complaints" class="btn btn-red"><i class="fas fa-comment-dots"></i> Complaints</a>
+    <a href="/tanker_requests" class="btn btn-gold"><i class="fas fa-truck"></i> Tanker Requests</a>
+    <a href="/connections" class="btn btn-green"><i class="fas fa-plug"></i> Connections</a>
+    <a href="/manage_wards" class="btn btn-outline-blue"><i class="fas fa-map-marker-alt"></i> Manage Wards</a>
+    <a href="/reports" class="btn btn-outline-blue"><i class="fas fa-chart-bar"></i> Reports</a>
+  </div>
+</div>
+{% endblock %}

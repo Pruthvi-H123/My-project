@@ -1,0 +1,122 @@
+{% extends 'user_layout.html' %}
+{% block title %}Water Supply Schedule{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Water Supply Schedule</h1><p>Ward-wise water supply timings</p></div>
+</div>
+
+{% if today_supply %}
+<div style="background:linear-gradient(135deg,#00b48c,#007a60);border-radius:18px;padding:1.25rem 1.5rem;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;box-shadow:0 8px 25px rgba(0,180,140,0.3);margin-bottom:1.5rem;">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div style="width:48px;height:48px;background:rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;"><i class="fas fa-tint"></i></div>
+    <div>
+      <p style="font-size:0.72rem;opacity:0.8;text-transform:uppercase;letter-spacing:1px;">Today — {{ today }}</p>
+      <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.1rem;">Water Available in Your Ward Today! ✅</h3>
+      <p style="font-size:0.82rem;opacity:0.85;">{{ today_supply.ward_name }} &nbsp;|&nbsp; {{ today_supply.start_time }} — {{ today_supply.end_time }} &nbsp;|&nbsp; {{ today_supply.supply_type }}</p>
+    </div>
+  </div>
+</div>
+{% else %}
+<div style="background:linear-gradient(135deg,#dc3232,#a01010);border-radius:18px;padding:1.25rem 1.5rem;color:#fff;display:flex;align-items:center;gap:12px;box-shadow:0 8px 25px rgba(220,50,50,0.3);margin-bottom:1.5rem;">
+  <div style="width:48px;height:48px;background:rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;"><i class="fas fa-tint-slash"></i></div>
+  <div>
+    <p style="font-size:0.72rem;opacity:0.8;text-transform:uppercase;letter-spacing:1px;">Today — {{ today }}</p>
+    <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.1rem;">No Water Supply in Your Ward Today ❌</h3>
+    <p style="font-size:0.82rem;opacity:0.85;">Check the schedule below for next supply day.</p>
+  </div>
+</div>
+{% endif %}
+
+<div class="card">
+  <div class="card-head">
+    <h3><i class="fas fa-calendar-alt" style="color:#0e63d2;"></i> All Wards Schedule</h3>
+    <div style="display:flex;align-items:center;gap:0.75rem;">
+      <div style="position:relative;">
+        <i class="fas fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#9ab0cc;font-size:0.85rem;"></i>
+        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search ward..."
+               style="padding:8px 12px 8px 36px;border:1.5px solid #e8eef8;border-radius:10px;font-size:0.85rem;outline:none;font-family:'Inter',sans-serif;width:200px;"
+               onfocus="this.style.borderColor='#0e63d2'" onblur="this.style.borderColor='#e8eef8'"/>
+      </div>
+      <select id="wardFilter" onchange="filterTable()"
+              style="padding:8px 14px;border:1.5px solid #e8eef8;border-radius:10px;font-size:0.85rem;outline:none;font-family:'Inter',sans-serif;color:#0a1628;cursor:pointer;">
+        <option value="">All Wards</option>
+        {% for w in wards %}
+        <option value="{{ w.ward_name }}">{{ w.ward_name }}</option>
+        {% endfor %}
+      </select>
+      <select id="dayFilter" onchange="filterTable()"
+              style="padding:8px 14px;border:1.5px solid #e8eef8;border-radius:10px;font-size:0.85rem;outline:none;font-family:'Inter',sans-serif;color:#0a1628;cursor:pointer;">
+        <option value="">All Days</option>
+        {% for day in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] %}
+        <option value="{{ day }}" {% if day == today %}selected{% endif %}>{{ day }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  {% if schedules %}
+  <div class="table-wrap">
+    <table id="scheduleTable">
+      <thead>
+        <tr><th>#</th><th>Ward Name</th><th>Day</th><th>Start Time</th><th>End Time</th><th>Supply Type</th></tr>
+      </thead>
+      <tbody>
+        {% for s in schedules %}
+        <tr style="{% if s.day_of_week == today %}background:rgba(14,99,210,0.04);{% endif %}">
+          <td style="color:#9ab0cc;">{{ loop.index }}</td>
+          <td style="font-weight:600;color:#0a1628;">{{ s.ward_name }}</td>
+          <td>
+            {{ s.day_of_week }}
+            {% if s.day_of_week == today %}
+            <span style="background:#0e63d2;color:#fff;font-size:0.62rem;padding:2px 7px;border-radius:20px;margin-left:5px;font-weight:700;">TODAY</span>
+            {% endif %}
+          </td>
+          <td style="font-weight:600;color:#0e63d2;">{{ s.start_time }}</td>
+          <td style="font-weight:600;color:#0e63d2;">{{ s.end_time }}</td>
+          <td>
+            <span class="badge {% if s.supply_type=='Regular' %}badge-approved{% elif s.supply_type=='Emergency' %}badge-unpaid{% else %}badge-pending{% endif %}">
+              {{ s.supply_type }}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div id="noResults" style="display:none;" class="empty-state">
+    <i class="fas fa-search"></i>
+    <p>No schedule found for your search.</p>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <i class="fas fa-calendar-times"></i>
+    <p>No supply schedule added yet.</p>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+function filterTable() {
+  var search = document.getElementById('searchInput').value.toLowerCase();
+  var ward   = document.getElementById('wardFilter').value.toLowerCase();
+  var day    = document.getElementById('dayFilter').value.toLowerCase();
+  var rows   = document.querySelectorAll('#scheduleTable tbody tr');
+  var visible = 0;
+  rows.forEach(function(row) {
+    var cells    = row.getElementsByTagName('td');
+    var wardName = cells[1].textContent.toLowerCase();
+    var dayName  = cells[2].textContent.toLowerCase();
+    var matchSearch = wardName.includes(search) || dayName.includes(search);
+    var matchWard   = ward === '' || wardName.includes(ward);
+    var matchDay    = day === '' || dayName.includes(day);
+    if (matchSearch && matchWard && matchDay) { row.style.display = ''; visible++; }
+    else { row.style.display = 'none'; }
+  });
+  document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+}
+window.addEventListener('DOMContentLoaded', function() {
+  var userWard = "{{ today_supply.ward_name if today_supply else '' }}";
+  if (userWard) { document.getElementById('wardFilter').value = userWard; filterTable(); }
+});
+</script>
+{% endblock %}

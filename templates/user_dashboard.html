@@ -1,0 +1,35 @@
+{% extends 'user_layout.html' %}
+{% block title %}Dashboard — Gadag Water Supply{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title">
+    <h1>Good day, {{ session.name }}! 👋</h1>
+    <p>Here's your water services overview</p>
+  </div>
+</div>
+
+<!-- USER INFO CARD -->
+<div class="card" style="margin-bottom:1.5rem;background:linear-gradient(135deg,#0e63d2,#0047ab);color:#fff;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;">{{ user.name[0].upper() }}</div>
+    <div>
+      <h2 style="font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;">{{ user.name }}</h2>
+      <p style="opacity:0.8;font-size:0.85rem;">{{ user.email }} &nbsp;|&nbsp; {{ user.phone }}</p>
+      <p style="opacity:0.7;font-size:0.8rem;">Ward: {{ user.ward_name or 'Not Assigned' }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="card">
+  <div class="card-head"><h3><i class="fas fa-bolt" style="color:#f0a000;"></i> Quick Actions</h3></div>
+  <div class="qa-grid">
+    <a href="/add_complaint" class="qa-btn"><div class="qa-icon" style="color:#dc3232;"><i class="fas fa-comment-dots"></i></div><h4>File Complaint</h4><p>Report a water issue</p></a>
+    <a href="/add_tanker_request" class="qa-btn"><div class="qa-icon" style="color:#f0a000;"><i class="fas fa-truck"></i></div><h4>Book Tanker</h4><p>Emergency water delivery</p></a>
+    <a href="/request_connection" class="qa-btn"><div class="qa-icon" style="color:#7c3aed;"><i class="fas fa-plug"></i></div><h4>New Connection</h4><p>Apply for water connection</p></a>
+    <a href="/my_requests" class="qa-btn"><div class="qa-icon" style="color:#0e63d2;"><i class="fas fa-tasks"></i></div><h4>My Requests</h4><p>Track all your requests</p></a>
+    <a href="/profile" class="qa-btn"><div class="qa-icon" style="color:#00b48c;"><i class="fas fa-user-edit"></i></div><h4>Edit Profile</h4><p>Update your details</p></a>
+    <a href="/about" class="qa-btn"><div class="qa-icon" style="color:#0891b2;"><i class="fas fa-info-circle"></i></div><h4>About Portal</h4><p>Learn more about us</p></a>
+  </div>
+</div>
+{% endblock %}

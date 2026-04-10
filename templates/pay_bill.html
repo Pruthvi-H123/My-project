@@ -1,0 +1,114 @@
+{% extends 'user_layout.html' %}
+{% block title %}Pay Bill{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Pay Water Bill</h1><p>Complete your payment securely</p></div>
+  <a href="/my_bills" class="btn btn-outline-blue"><i class="fas fa-arrow-left"></i> Back</a>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+
+  <!-- BILL DETAILS -->
+  <div class="card">
+    <div class="card-head"><h3><i class="fas fa-file-invoice" style="color:#0e63d2;"></i> Bill Details</h3></div>
+    <div style="display:flex;flex-direction:column;gap:0.75rem;">
+      {% for label,val in [('Bill ID','#'+bill.bill_id|string),('Billing Month',bill.billing_month),('Connection Type',bill.connection_type or '—'),('Meter Number',bill.meter_number or '—'),('Total Units',bill.total_units|string+' units'),('Due Date',bill.due_date|string)] %}
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4ff;">
+        <span style="font-size:0.82rem;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">{{ label }}</span>
+        <span style="font-size:0.875rem;font-weight:600;color:#0a0f1e;">{{ val }}</span>
+      </div>
+      {% endfor %}
+      <!-- Amount -->
+      <div style="background:linear-gradient(135deg,#0e63d2,#0047ab);border-radius:14px;padding:1.25rem;text-align:center;margin-top:0.5rem;">
+        <p style="color:rgba(255,255,255,0.7);font-size:0.8rem;margin-bottom:4px;">AMOUNT DUE</p>
+        <p style="font-family:'Sora',sans-serif;font-size:2.5rem;font-weight:900;color:#fff;">₹{{ bill.amount_due }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYMENT -->
+  <div class="card">
+    <div class="card-head"><h3><i class="fas fa-qrcode" style="color:#0e63d2;"></i> Payment</h3></div>
+
+    <!-- Simulated QR Code -->
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="width:180px;height:180px;margin:0 auto 1rem;background:#fff;border:2px solid #e8eef8;border-radius:16px;display:flex;align-items:center;justify-content:center;padding:12px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+        <svg viewBox="0 0 100 100" style="width:100%;height:100%;">
+          <!-- QR Code Pattern (Simulated) -->
+          <rect width="100" height="100" fill="white"/>
+          <!-- Top Left -->
+          <rect x="10" y="10" width="25" height="25" fill="none" stroke="#0e63d2" stroke-width="3"/>
+          <rect x="15" y="15" width="15" height="15" fill="#0e63d2"/>
+          <!-- Top Right -->
+          <rect x="65" y="10" width="25" height="25" fill="none" stroke="#0e63d2" stroke-width="3"/>
+          <rect x="70" y="15" width="15" height="15" fill="#0e63d2"/>
+          <!-- Bottom Left -->
+          <rect x="10" y="65" width="25" height="25" fill="none" stroke="#0e63d2" stroke-width="3"/>
+          <rect x="15" y="70" width="15" height="15" fill="#0e63d2"/>
+          <!-- Data modules -->
+          <rect x="40" y="10" width="5" height="5" fill="#0e63d2"/>
+          <rect x="48" y="10" width="5" height="5" fill="#0e63d2"/>
+          <rect x="56" y="10" width="5" height="5" fill="#0e63d2"/>
+          <rect x="40" y="18" width="5" height="5" fill="#0e63d2"/>
+          <rect x="56" y="18" width="5" height="5" fill="#0e63d2"/>
+          <rect x="40" y="26" width="5" height="5" fill="#0e63d2"/>
+          <rect x="48" y="26" width="5" height="5" fill="#0e63d2"/>
+          <rect x="10" y="40" width="5" height="5" fill="#0e63d2"/>
+          <rect x="18" y="40" width="5" height="5" fill="#0e63d2"/>
+          <rect x="26" y="40" width="5" height="5" fill="#0e63d2"/>
+          <rect x="40" y="40" width="5" height="5" fill="#0e63d2"/>
+          <rect x="48" y="40" width="5" height="5" fill="#0e63d2"/>
+          <rect x="56" y="40" width="5" height="5" fill="#0e63d2"/>
+          <rect x="65" y="40" width="5" height="5" fill="#0e63d2"/>
+          <rect x="73" y="40" width="5" height="5" fill="#0e63d2"/>
+          <rect x="81" y="40" width="5" height="5" fill="#0e63d2"/>
+          <rect x="10" y="48" width="5" height="5" fill="#0e63d2"/>
+          <rect x="26" y="48" width="5" height="5" fill="#0e63d2"/>
+          <rect x="40" y="48" width="5" height="5" fill="#0e63d2"/>
+          <rect x="56" y="48" width="5" height="5" fill="#0e63d2"/>
+          <rect x="73" y="48" width="5" height="5" fill="#0e63d2"/>
+          <rect x="10" y="56" width="5" height="5" fill="#0e63d2"/>
+          <rect x="18" y="56" width="5" height="5" fill="#0e63d2"/>
+          <rect x="26" y="56" width="5" height="5" fill="#0e63d2"/>
+          <rect x="48" y="56" width="5" height="5" fill="#0e63d2"/>
+          <rect x="65" y="56" width="5" height="5" fill="#0e63d2"/>
+          <rect x="81" y="56" width="5" height="5" fill="#0e63d2"/>
+          <rect x="40" y="65" width="5" height="5" fill="#0e63d2"/>
+          <rect x="56" y="65" width="5" height="5" fill="#0e63d2"/>
+          <rect x="73" y="65" width="5" height="5" fill="#0e63d2"/>
+          <rect x="40" y="73" width="5" height="5" fill="#0e63d2"/>
+          <rect x="48" y="73" width="5" height="5" fill="#0e63d2"/>
+          <rect x="65" y="73" width="5" height="5" fill="#0e63d2"/>
+          <rect x="81" y="73" width="5" height="5" fill="#0e63d2"/>
+          <rect x="40" y="81" width="5" height="5" fill="#0e63d2"/>
+          <rect x="56" y="81" width="5" height="5" fill="#0e63d2"/>
+          <rect x="73" y="81" width="5" height="5" fill="#0e63d2"/>
+        </svg>
+      </div>
+      <p style="font-size:0.82rem;color:#888;margin-bottom:2px;">Scan QR to pay</p>
+      <p style="font-size:0.75rem;color:#bbb;">UPI ID: gadag.water@upi</p>
+    </div>
+
+    <div style="text-align:center;margin-bottom:1rem;font-size:0.8rem;color:#aaa;">— OR select payment method —</div>
+
+    <form method="POST">
+      <div class="field-group">
+        <label class="field-label">Payment Method</label>
+        <select name="payment_mode" class="field-input" required>
+          <option value="QR Code">QR Code</option>
+          <option value="UPI">UPI</option>
+          <option value="Net Banking">Net Banking</option>
+          <option value="Debit Card">Debit Card</option>
+          <option value="Cash">Cash (Office)</option>
+        </select>
+      </div>
+      <div style="background:rgba(0,180,140,0.08);border:1px solid rgba(0,180,140,0.2);border-radius:10px;padding:12px;margin-bottom:1rem;font-size:0.82rem;color:#00916e;">
+        <i class="fas fa-shield-alt"></i> This is a simulated payment for demo purposes.
+      </div>
+      <button type="submit" class="btn btn-blue" style="width:100%;justify-content:center;padding:14px;font-size:1rem;">
+        <i class="fas fa-lock"></i> Confirm Payment — ₹{{ bill.amount_due }}
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

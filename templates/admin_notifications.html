@@ -1,0 +1,66 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Notifications Log — Admin{% endblock %}
+{% block content %}
+
+<div class="topbar">
+  <div class="page-title">
+    <h1>Notifications Log</h1>
+    <p>All notifications sent to users</p>
+  </div>
+  <a href="/admin_dashboard" class="btn btn-outline-blue">
+    <i class="fas fa-arrow-left"></i> Back
+  </a>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    <h3><i class="fas fa-bell" style="color:#f0a000;"></i> All Notifications</h3>
+  </div>
+
+  {% if notifications %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Message</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for n in notifications %}
+        <tr>
+          <td style="color:#9ab0cc;">{{ n.notification_id }}</td>
+          <td>
+            <p style="font-weight:600;">{{ n.name }}</p>
+            <p style="font-size:0.75rem;color:#888;">{{ n.email }}</p>
+          </td>
+          <td style="font-size:0.85rem;">{{ n.message }}</td>
+          <td>
+            <span class="badge {% if n.notification_type=='Bill' %}badge-pending{% elif n.notification_type=='Payment' %}badge-approved{% elif n.notification_type=='Complaint' %}badge-unpaid{% else %}badge-pending{% endif %}">
+              {{ n.notification_type }}
+            </span>
+          </td>
+          <td>
+            <span class="badge {% if n.read_status=='Unread' %}badge-unpaid{% else %}badge-approved{% endif %}">
+              {{ n.read_status }}
+            </span>
+          </td>
+          <td style="font-size:0.82rem;">{{ n.created_at.strftime('%d %b %Y, %I:%M %p') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <i class="fas fa-bell-slash"></i>
+    <p>No notifications yet.</p>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

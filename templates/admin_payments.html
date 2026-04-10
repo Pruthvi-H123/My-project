@@ -1,0 +1,36 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Payments — Admin{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Payment History</h1><p>All payment transactions</p></div>
+</div>
+<div class="stats-row" style="grid-template-columns:repeat(2,1fr);max-width:500px;">
+  <div class="s-card" style="--sc:#00b48c;"><div class="s-icon" style="background:rgba(0,180,140,0.1);color:#00b48c;"><i class="fas fa-rupee-sign"></i></div><div class="s-val">₹{{ total_collected }}</div><div class="s-lbl">Total Collected</div></div>
+  <div class="s-card" style="--sc:#0e63d2;"><div class="s-icon" style="background:rgba(14,99,210,0.1);color:#0e63d2;"><i class="fas fa-receipt"></i></div><div class="s-val">{{ payments|length }}</div><div class="s-lbl">Total Transactions</div></div>
+</div>
+<div class="card">
+  <div class="card-head"><h3><i class="fas fa-receipt" style="color:#0e63d2;"></i> All Payments</h3></div>
+  {% if payments %}
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Citizen</th><th>Bill Month</th><th>Amount Paid</th><th>Payment Mode</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for p in payments %}
+        <tr>
+          <td style="color:#9ab0cc;">{{ p.payment_id }}</td>
+          <td><p style="font-weight:600;">{{ p.name }}</p><p style="font-size:0.75rem;color:#888;">{{ p.phone }}</p></td>
+          <td>{{ p.billing_month.strftime('%B %Y')if p.billing_month else'-' }}</td>
+          <td style="font-weight:700;color:#00b48c;">₹{{ p.amount_paid }}</td>
+          <td>{{ p.payment_mode }}</td>
+          <td>{{ p.payment_date}}</td>
+          <td><span class="badge badge-{{ p.payment_status|lower }}">{{ p.payment_status }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state"><i class="fas fa-receipt"></i><p>No payments yet.</p></div>
+  {% endif %}
+</div>
+{% endblock %}

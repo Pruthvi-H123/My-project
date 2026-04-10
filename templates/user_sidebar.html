@@ -1,0 +1,35 @@
+<div class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo"><i class="fas fa-water"></i></div>
+    <div class="sb-title">Gadag Water<span>Citizen Portal</span></div>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Main Menu</div>
+    <a href="/user_dashboard" class="sb-link {% if request.path=='/user_dashboard' %}active{% endif %}"><i class="fas fa-th-large"></i> Dashboard</a>
+    <a href="/my_requests" class="sb-link {% if request.path=='/my_requests' %}active{% endif %}"><i class="fas fa-tasks"></i> My Requests</a>
+    <a href="/my_bills" class="sb-link {% if request.path=='/my_bills' %}active{% endif %}"><i class="fas fa-file-invoice-dollar"></i> My Bills</a>
+    <a href="/add_complaint" class="sb-link {% if request.path=='/add_complaint' %}active{% endif %}"><i class="fas fa-comment-dots"></i> Add Complaint</a>
+    <a href="/add_tanker_request" class="sb-link {% if request.path=='/add_tanker_request' %}active{% endif %}"><i class="fas fa-truck"></i> Tanker Request</a>
+    <a href="/request_connection" class="sb-link {% if request.path=='/request_connection' %}active{% endif %}"><i class="fas fa-plug"></i> New Connection</a>
+     <a href="/view_schedule" class="sb-link {% if request.path=='/view_schedule' %}active{% endif %}"><i class="fas fa-tint"></i> Water Supply Timings</a>
+
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Account</div>
+    <a href="/profile" class="sb-link {% if request.path=='/profile' %}active{% endif %}"><i class="fas fa-user"></i> My Profile</a>
+    <a href="/about" class="sb-link"><i class="fas fa-info-circle"></i> About</a>
+    <a href="/contact" class="sb-link"><i class="fas fa-headset"></i> Contact</a>
+    <a href="/logout" class="sb-link danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+  {% if session.name %}
+  <div class="sb-user">
+    <div class="sb-user-info">
+      <div class="sb-avatar">{{ session.name[0].upper() }}</div>
+      <div>
+        <div class="sb-user-name">{{ session.name }}</div>
+        <div class="sb-user-ward">Citizen Account</div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>

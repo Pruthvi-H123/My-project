@@ -1,0 +1,31 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Complaints — Admin{% endblock %}
+{% block content %}
+<div class="topbar"><div class="page-title"><h1>Complaints</h1><p>Manage citizen complaints</p></div></div>
+<div class="card">
+  <div class="card-head"><h3><i class="fas fa-comment-dots" style="color:#dc3232;"></i> All Complaints</h3></div>
+  {% if complaints %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Citizen</th><th>Type</th><th>Description</th><th>Date</th><th>Status</th><th>Resolution</th><th>Action</th></tr></thead>
+    <tbody>{% for c in complaints %}<tr>
+      <td style="color:#9ab0cc;">{{ c.complaint_id }}</td>
+      <td style="font-weight:600;">{{ c.user_name }}</td>
+      <td>{{ c.complaint_type }}</td>
+      <td style="font-size:0.82rem;color:#6a7f9a;">{{ c.description[:50] }}...</td>
+      <td>{{ c.complaint_date }}</td>
+      <td><span class="badge badge-{{ c.complaint_status|lower }}">{{ c.complaint_status }}</span></td>
+      <td>{{ c.resolution_date or '—' }}</td>
+      <td>
+        {% if c.complaint_status != 'Resolved' %}
+        <a href="/resolve_complaint/{{ c.complaint_id }}" class="btn btn-green btn-sm" onclick="return confirm('Mark as resolved?')"><i class="fas fa-check"></i> Resolve</a>
+        {% else %}
+        <span style="color:#00b48c;font-size:0.8rem;"><i class="fas fa-check-circle"></i> Done</span>
+        {% endif %}
+      </td>
+    </tr>{% endfor %}</tbody>
+  </table></div>
+  {% else %}
+  <div class="empty-state"><i class="fas fa-check-circle"></i><p>No complaints found.</p></div>
+  {% endif %}
+</div>
+{% endblock %}

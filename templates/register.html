@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register — Gadag Water Supply</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+<div class="auth-page">
+
+  <!-- LEFT -->
+  <div class="auth-left" style="background:linear-gradient(160deg,#00b48c,#007a60 50%,#0e63d2);">
+    <div class="auth-left-content">
+      <div class="auth-left-logo"><i class="fas fa-user-plus"></i></div>
+      <h2>Join Gadag Water Portal</h2>
+      <p>Create your citizen account and access all municipal water services digitally from anywhere.</p>
+      <div class="auth-feature"><i class="fas fa-check-circle" style="color:#a0ffdd;"></i><span>Free registration — no charges</span></div>
+      <div class="auth-feature"><i class="fas fa-lock" style="color:#a0ffdd;"></i><span>Your data is safe and secure</span></div>
+      <div class="auth-feature"><i class="fas fa-bolt" style="color:#a0ffdd;"></i><span>Instant access after registration</span></div>
+      <div class="auth-feature"><i class="fas fa-mobile-alt" style="color:#a0ffdd;"></i><span>Easy to use on any device</span></div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="auth-right" style="flex:0 0 560px;">
+    <div class="auth-form-box" style="max-width:480px;">
+      <div class="auth-brand">
+        <div class="logo"><i class="fas fa-water"></i></div>
+        <span>Gadag Water Supply</span>
+      </div>
+      <h1>Create Account</h1>
+      <p class="sub">Sign up to manage your water supply services</p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}{% for cat,msg in messages %}
+  <div class="flash-msg flash-{{ cat }}" id="flash-msg"><i class="fas fa-exclamation-circle"></i> {{ msg }}</div>
+  {% endfor %}{% endif %}
+{% endwith %}
+
+<script>
+  setTimeout(function() {
+    var msg = document.getElementById("flash-msg");
+    if (msg) {
+      msg.style.transition = "opacity 0.5s";
+      msg.style.opacity = "0";
+      setTimeout(() => msg.remove(), 500);
+    }
+  }, 3000);
+</script>
+
+      <form method="POST" enctype="multipart/form-data" id="registerForm" novalidate>
+
+        <!-- Full Name -->
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required
+                     oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'')"/>
+            </div>
+            <small id="nameErr" class="val-msg"></small>
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <div class="input-wrap" style="display:flex;align-items:center;">
+            <span style="position:absolute;left:14px;color:#0e63d2;font-size:0.85rem;font-weight:700;z-index:2;">+91</span>
+            <input type="text" id="phone" name="phone" class="form-input" placeholder="9876543210"
+                   style="padding-left:52px;" maxlength="10" required
+                   oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)"/>
+          </div>
+          <small id="phoneErr" class="val-msg"></small>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <div class="input-wrap">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required/>
+          </div>
+          <small id="emailErr" class="val-msg"></small>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+          <label class="form-label">Residential Address</label>
+          <div class="input-wrap">
+            <i class="fas fa-map-marker-alt"></i>
+            <input type="text" id="address" name="address" class="form-input" placeholder="House No., Street, Area" required
+                   oninput="this.value=this.value.replace(/[^A-Za-z0-9 ,.\-\/]/g,'')"/>
+          </div>
+          <small id="addressErr" class="val-msg"></small>
+        </div>
+
+        <!-- Aadhaar Number -->
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Aadhaar Number</label>
+            <div class="input-wrap">
+              <i class="fas fa-id-card"></i>
+              <input type="text" id="aadhar_no" name="aadhar_no" class="form-input" placeholder="123456789012"
+                     maxlength="12" required
+                     oninput="this.value=this.value.replace(/\D/g,'').slice(0,12)"/>
+            </div>
+            <small id="aadharErr" class="val-msg"></small>
+          </div>
+        </div>
+
+        <!-- Aadhaar File Upload -->
+        <div class="form-group">
+          <label class="form-label">Upload Aadhaar Document</label>
+          <div style="border:2px dashed rgba(14,99,210,0.3);border-radius:12px;padding:1rem;text-align:center;background:#f8faff;cursor:pointer;transition:all 0.2s;"
+               onclick="document.getElementById('aadharFileInput').click()"
+               onmouseover="this.style.borderColor='#0e63d2';this.style.background='#eef5ff'"
+               onmouseout="this.style.borderColor='rgba(14,99,210,0.3)';this.style.background='#f8faff'">
+            <i class="fas fa-cloud-upload-alt" style="font-size:1.5rem;color:#0e63d2;margin-bottom:6px;display:block;"></i>
+            <p style="font-size:0.82rem;color:#4a5f80;margin-bottom:4px;">Click to upload Aadhaar document</p>
+            <p style="font-size:0.72rem;color:#9ab0cc;">Supported: JPG, PNG, PDF (Max 2MB)</p>
+            <input type="file" id="aadharFileInput" name="aadhar_file" accept=".jpg,.jpeg,.png,.pdf" style="display:none;" onchange="showFileName(this)"/>
+          </div>
+          <p id="fileNameDisplay" style="font-size:0.78rem;color:#00b48c;margin-top:6px;display:none;">
+            <i class="fas fa-check-circle"></i> <span id="fileNameText"></span>
+          </p>
+          <small id="fileErr" class="val-msg"></small>
+        </div>
+
+        <!-- Ward -->
+        <div class="form-group">
+          <label class="form-label">Select Ward</label>
+          <div class="input-wrap">
+            <i class="fas fa-map"></i>
+            <select id="ward_id" name="ward_id" class="form-input" required>
+              <option value="">Choose Ward</option>
+              {% for w in wards %}
+              <option value="{{ w.ward_id }}">{{ w.ward_name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <small id="wardErr" class="val-msg"></small>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-wrap">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" name="password" class="form-input" placeholder="Min. 8 characters" required/>
+          </div>
+          <!-- Password strength bar -->
+          <div style="margin-top:8px;">
+            <div style="height:4px;background:#e8eef8;border-radius:4px;overflow:hidden;">
+              <div id="strengthBar" style="height:100%;width:0%;border-radius:4px;transition:all 0.3s;"></div>
+            </div>
+            <small id="strengthText" style="font-size:0.72rem;font-weight:700;"></small>
+          </div>
+          <small id="passErr" class="val-msg"></small>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <div class="input-wrap">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="confirm_password" id="confirm_password" class="form-input" placeholder="Re-enter your password" required/>
+          </div>
+          <p id="passwordMsg" style="font-size:0.75rem;margin-top:5px;display:none;"></p>
+          <small id="confirmErr" class="val-msg"></small>
+        </div>
+
+        <button type="submit" class="btn-submit btn-submit-green">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+      </form>
+
+      <div class="auth-footer-text" style="margin-top:1.25rem;">
+        Already have an account? <a href="/login">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+.val-msg { font-size:0.75rem; font-weight:600; margin-top:4px; display:block; min-height:16px; }
+.val-msg.error { color:#dc3232; }
+.val-msg.success { color:#00b48c; }
+.form-input.input-error { border-color:#dc3232 !important; box-shadow:0 0 0 3px rgba(220,50,50,0.1) !important; }
+.form-input.input-success { border-color:#00b48c !important; box-shadow:0 0 0 3px rgba(0,180,140,0.1) !important; }
+</style>
+
+<script>
+// ── FILE NAME DISPLAY ──
+function showFileName(input) {
+  if (input.files && input.files[0]) {
+    document.getElementById('fileNameText').textContent = input.files[0].name;
+    document.getElementById('fileNameDisplay').style.display = 'block';
+    document.getElementById('fileErr').textContent = '';
+  }
+}
+
+// ── SHOW / CLEAR ERROR ──
+function showErr(id, msg) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = '✗ ' + msg;
+  el.className = 'val-msg error';
+}
+function showOk(id, msg) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = '✓ ' + (msg || 'Looks good!');
+  el.className = 'val-msg success';
+}
+function clearMsg(id) {
+  var el = document.getElementById(id);
+  if (el) { el.textContent = ''; el.className = 'val-msg'; }
+}
+function setInputState(inputId, valid) {
+  var el = document.getElementById(inputId);
+  if (!el) return;
+  el.classList.remove('input-error', 'input-success');
+  el.classList.add(valid ? 'input-success' : 'input-error');
+}
+
+// ── VALIDATIONS ──
+function validateName() {
+  var val = document.getElementById('name').value.trim();
+  if (!val) { showErr('nameErr','Full name is required'); setInputState('name',false); return false; }
+  if (!/^[A-Za-z ]+$/.test(val)) { showErr('nameErr','Name must contain only letters and spaces'); setInputState('name',false); return false; }
+  if (val.length < 3) { showErr('nameErr','Name must be at least 3 characters'); setInputState('name',false); return false; }
+  showOk('nameErr'); setInputState('name',true); return true;
+}
+
+function validatePhone() {
+  var val = document.getElementById('phone').value.trim();
+  if (!val) { showErr('phoneErr','Phone number is required'); setInputState('phone',false); return false; }
+  if (!/^[6-9]\d{9}$/.test(val)) { showErr('phoneErr','Enter valid 10-digit number starting with 6, 7, 8 or 9'); setInputState('phone',false); return false; }
+  showOk('phoneErr','+91 ' + val + ' ✓'); setInputState('phone',true); return true;
+}
+
+function validateEmail() {
+  var val = document.getElementById('email').value.trim();
+  if (!val) { showErr('emailErr','Email address is required'); setInputState('email',false); return false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { showErr('emailErr','Enter a valid email with @ character'); setInputState('email',false); return false; }
+  showOk('emailErr'); setInputState('email',true); return true;
+}
+
+function validateAddress() {
+  var val = document.getElementById('address').value.trim();
+  if (!val) { showErr('addressErr','Address is required'); setInputState('address',false); return false; }
+  if (val.length < 5) { showErr('addressErr','Enter a valid address'); setInputState('address',false); return false; }
+  showOk('addressErr'); setInputState('address',true); return true;
+}
+
+function validateAadhaar() {
+  var val = document.getElementById('aadhar_no').value.trim();
+  if (!val) { showErr('aadharErr','Aadhaar number is required'); setInputState('aadhar_no',false); return false; }
+  if (!/^\d{12}$/.test(val)) { showErr('aadharErr','Aadhaar must be exactly 12 digits'); setInputState('aadhar_no',false); return false; }
+  showOk('aadharErr'); setInputState('aadhar_no',true); return true;
+}
+
+function validateFile() {
+  var file = document.getElementById('aadharFileInput');
+  if (!file || file.files.length === 0) { showErr('fileErr','Please upload your Aadhaar document'); return false; }
+  var ext = file.files[0].name.split('.').pop().toLowerCase();
+  if (!['jpg','jpeg','png','pdf'].includes(ext)) { showErr('fileErr','Only JPG, PNG, PDF files allowed'); return false; }
+  if (file.files[0].size > 2*1024*1024) { showErr('fileErr','File size must be less than 2MB'); return false; }
+  showOk('fileErr','File selected'); return true;
+}
+
+function validateWard() {
+  var val = document.getElementById('ward_id').value;
+  if (!val) { showErr('wardErr','Please select your ward'); setInputState('ward_id',false); return false; }
+  showOk('wardErr'); setInputState('ward_id',true); return true;
+}
+
+function validatePassword() {
+  var val = document.getElementById('password').value;
+  if (!val) { showErr('passErr','Password is required'); setInputState('password',false); updateStrength(''); return false; }
+  if (val.length < 8) { showErr('passErr','Password must be at least 8 characters'); setInputState('password',false); return false; }
+  if (!/[A-Z]/.test(val)) { showErr('passErr','Must include at least one uppercase letter (A-Z)'); setInputState('password',false); return false; }
+  if (!/[a-z]/.test(val)) { showErr('passErr','Must include at least one lowercase letter (a-z)'); setInputState('password',false); return false; }
+  if (!/[@$#!%*?&]/.test(val)) { showErr('passErr','Must include at least one special character (@$#!%*?&)'); setInputState('password',false); return false; }
+  showOk('passErr','Strong password!'); setInputState('password',true); return true;
+}
+
+function validateConfirm() {
+  var pass = document.getElementById('password').value;
+  var confirm = document.getElementById('confirm_password').value;
+  var msg = document.getElementById('passwordMsg');
+  if (!confirm) {
+    showErr('confirmErr','Please confirm your password');
+    setInputState('confirm_password',false);
+    msg.style.display='none';
+    return false;
+  }
+  if (pass !== confirm) {
+    showErr('confirmErr','Passwords do not match');
+    setInputState('confirm_password',false);
+    msg.style.display='block'; msg.style.color='#dc3232';
+    msg.innerHTML='<i class="fas fa-times-circle"></i> Passwords do not match';
+    return false;
+  }
+  showOk('confirmErr','Passwords match!');
+  setInputState('confirm_password',true);
+  msg.style.display='block'; msg.style.color='#00b48c';
+  msg.innerHTML='<i class="fas fa-check-circle"></i> Passwords match';
+  return true;
+}
+
+// ── PASSWORD STRENGTH ──
+function updateStrength(val) {
+  var bar = document.getElementById('strengthBar');
+  var text = document.getElementById('strengthText');
+  if (!val) { bar.style.width='0%'; text.textContent=''; return; }
+  var score = 0;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[a-z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[@$#!%*?&]/.test(val)) score++;
+  var colors = ['#dc3232','#f0a000','#f0a000','#00b48c','#0e63d2'];
+  var labels = ['Very Weak','Weak','Fair','Strong','Very Strong'];
+  var widths = ['20%','40%','60%','80%','100%'];
+  bar.style.width = widths[score-1] || '20%';
+  bar.style.background = colors[score-1] || '#dc3232';
+  text.textContent = labels[score-1] || 'Very Weak';
+  text.style.color = colors[score-1] || '#dc3232';
+}
+
+// ── REAL TIME LISTENERS ──
+document.getElementById('name').addEventListener('blur', validateName);
+document.getElementById('name').addEventListener('input', function(){ if(this.value) validateName(); });
+document.getElementById('phone').addEventListener('blur', validatePhone);
+document.getElementById('phone').addEventListener('input', function(){ if(this.value) validatePhone(); });
+document.getElementById('email').addEventListener('blur', validateEmail);
+document.getElementById('email').addEventListener('input', function(){ if(this.value.includes('@')) validateEmail(); });
+document.getElementById('address').addEventListener('blur', validateAddress);
+document.getElementById('aadhar_no').addEventListener('blur', validateAadhaar);
+document.getElementById('aadhar_no').addEventListener('input', function(){ if(this.value.length===12) validateAadhaar(); });
+document.getElementById('ward_id').addEventListener('change', validateWard);
+document.getElementById('password').addEventListener('input', function(){
+  updateStrength(this.value);
+  if(this.value.length >= 8) validatePassword();
+});
+document.getElementById('password').addEventListener('blur', validatePassword);
+document.getElementById('confirm_password').addEventListener('input', function(){
+  if(this.value) validateConfirm();
+});
+document.getElementById('confirm_password').addEventListener('blur', validateConfirm);
+
+// ── ON SUBMIT ──
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  var valid = true;
+  if (!validateName()) valid = false;
+  if (!validatePhone()) valid = false;
+  if (!validateEmail()) valid = false;
+  if (!validateAddress()) valid = false;
+  if (!validateAadhaar()) valid = false;
+  if (!validateFile()) valid = false;
+  if (!validateWard()) valid = false;
+  if (!validatePassword()) valid = false;
+  if (!validateConfirm()) valid = false;
+  if (!valid) {
+    e.preventDefault();
+    var firstError = document.querySelector('.input-error');
+    if (firstError) firstError.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+});
+</script>
+
+</body>
+</html>

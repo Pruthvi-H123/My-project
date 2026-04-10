@@ -1,0 +1,110 @@
+{% extends "user_layout.html" %}
+{% block content %}
+
+<div style="max-width:420px;margin:40px auto;background:#fff;border-radius:18px;padding:24px;box-shadow:0 10px 40px rgba(0,0,0,0.08);">
+
+  <h2 style="text-align:center;margin-bottom:10px;">Security Deposit Payment</h2>
+  <p style="text-align:center;color:#666;margin-bottom:20px;">Amount: ₹15,000</p>
+
+  <!-- Simulated QR Code -->
+  <div style="text-align:center;margin-bottom:1.5rem;">
+    <div style="width:180px;height:180px;margin:0 auto 1rem;background:#fff;border:2px solid #e8eef8;border-radius:16px;display:flex;align-items:center;justify-content:center;padding:12px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+      
+      <svg viewBox="0 0 100 100" style="width:100%;height:100%;">
+        <rect width="100" height="100" fill="white"/>
+
+        <!-- QR Boxes -->
+        <rect x="10" y="10" width="25" height="25" fill="none" stroke="#0e63d2" stroke-width="3"/>
+        <rect x="15" y="15" width="15" height="15" fill="#0e63d2"/>
+
+        <rect x="65" y="10" width="25" height="25" fill="none" stroke="#0e63d2" stroke-width="3"/>
+        <rect x="70" y="15" width="15" height="15" fill="#0e63d2"/>
+
+        <rect x="10" y="65" width="25" height="25" fill="none" stroke="#0e63d2" stroke-width="3"/>
+        <rect x="15" y="70" width="15" height="15" fill="#0e63d2"/>
+
+        <!-- Data pattern -->
+        <rect x="40" y="10" width="5" height="5" fill="#0e63d2"/>
+        <rect x="48" y="10" width="5" height="5" fill="#0e63d2"/>
+        <rect x="56" y="10" width="5" height="5" fill="#0e63d2"/>
+        <rect x="40" y="18" width="5" height="5" fill="#0e63d2"/>
+        <rect x="56" y="18" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="40" y="26" width="5" height="5" fill="#0e63d2"/>
+        <rect x="48" y="26" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="10" y="40" width="5" height="5" fill="#0e63d2"/>
+        <rect x="18" y="40" width="5" height="5" fill="#0e63d2"/>
+        <rect x="26" y="40" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="40" y="40" width="5" height="5" fill="#0e63d2"/>
+        <rect x="48" y="40" width="5" height="5" fill="#0e63d2"/>
+        <rect x="56" y="40" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="65" y="40" width="5" height="5" fill="#0e63d2"/>
+        <rect x="73" y="40" width="5" height="5" fill="#0e63d2"/>
+        <rect x="81" y="40" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="10" y="48" width="5" height="5" fill="#0e63d2"/>
+        <rect x="26" y="48" width="5" height="5" fill="#0e63d2"/>
+        <rect x="40" y="48" width="5" height="5" fill="#0e63d2"/>
+        <rect x="56" y="48" width="5" height="5" fill="#0e63d2"/>
+        <rect x="73" y="48" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="10" y="56" width="5" height="5" fill="#0e63d2"/>
+        <rect x="18" y="56" width="5" height="5" fill="#0e63d2"/>
+        <rect x="26" y="56" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="48" y="56" width="5" height="5" fill="#0e63d2"/>
+        <rect x="65" y="56" width="5" height="5" fill="#0e63d2"/>
+        <rect x="81" y="56" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="40" y="65" width="5" height="5" fill="#0e63d2"/>
+        <rect x="56" y="65" width="5" height="5" fill="#0e63d2"/>
+        <rect x="73" y="65" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="40" y="73" width="5" height="5" fill="#0e63d2"/>
+        <rect x="48" y="73" width="5" height="5" fill="#0e63d2"/>
+        <rect x="65" y="73" width="5" height="5" fill="#0e63d2"/>
+        <rect x="81" y="73" width="5" height="5" fill="#0e63d2"/>
+
+        <rect x="40" y="81" width="5" height="5" fill="#0e63d2"/>
+        <rect x="56" y="81" width="5" height="5" fill="#0e63d2"/>
+        <rect x="73" y="81" width="5" height="5" fill="#0e63d2"/>
+      </svg>
+
+    </div>
+
+    <p style="font-size:0.82rem;color:#888;margin-bottom:2px;">Scan QR to pay</p>
+    <p style="font-size:0.75rem;color:#bbb;">UPI ID: gadag.water@upi</p>
+  </div>
+
+  <div style="text-align:center;margin-bottom:1rem;font-size:0.8rem;color:#aaa;">
+    — OR select payment method —
+  </div>
+
+  <!-- Payment Form -->
+  <form method="POST">
+    <div style="margin-bottom:15px;">
+      <label>Payment Method</label>
+      <select name="payment_mode" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;" required>
+        <option value="QR Code">QR Code</option>
+        <option value="UPI">UPI</option>
+        <option value="Net Banking">Net Banking</option>
+        <option value="Debit Card">Debit Card</option>
+        <option value="Cash">Cash (Office)</option>
+      </select>
+    </div>
+
+    <div style="background:#e8f7f3;border-radius:10px;padding:10px;margin-bottom:15px;font-size:0.85rem;color:#00916e;">
+      This is a simulated payment for demo purposes.
+    </div>
+
+    <button type="submit" style="width:100%;padding:14px;background:#0e63d2;color:#fff;border:none;border-radius:10px;font-size:1rem;">
+      Confirm Payment — ₹15000
+    </button>
+  </form>
+
+</div>
+
+{% endblock %}

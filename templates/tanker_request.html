@@ -1,0 +1,32 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Tanker Requests — Admin{% endblock %}
+{% block content %}
+<div class="topbar"><div class="page-title"><h1>Tanker Requests</h1><p>Manage water tanker bookings</p></div></div>
+<div class="card">
+  <div class="card-head"><h3><i class="fas fa-truck" style="color:#f0a000;"></i> All Tanker Requests</h3></div>
+  {% if requests %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Ward</th><th>Quantity</th><th>Month</th><th>Request Date</th><th>Supply Date</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>{% for r in requests %}<tr>
+      <td style="color:#9ab0cc;">{{ r.tanker_request_id }}</td>
+      <td style="font-weight:600;">{{ r.ward_name }}</td>
+      <td>{{ r.required_quantity }} L</td>
+      <td>{{ r.Request_month }}</td>
+      <td>{{ r.request_date }}</td>
+      <td>{{ r.supply_date or '—' }}</td>
+      <td><span class="badge badge-{{ r.status|lower }}">{{ r.status }}</span></td>
+      <td style="display:flex;gap:6px;">
+        {% if r.status == 'Pending' %}
+        <a href="/approve_tanker/{{ r.tanker_request_id }}" class="btn btn-green btn-sm" onclick="return confirm('Approve this request?')"><i class="fas fa-check"></i> Approve</a>
+        <a href="/reject_tanker/{{ r.tanker_request_id }}" class="btn btn-red btn-sm" onclick="return confirm('Reject this request?')"><i class="fas fa-times"></i> Reject</a>
+        {% else %}
+        <span style="color:#9ab0cc;font-size:0.8rem;">{{ r.status }}</span>
+        {% endif %}
+      </td>
+    </tr>{% endfor %}</tbody>
+  </table></div>
+  {% else %}
+  <div class="empty-state"><i class="fas fa-truck"></i><p>No tanker requests yet.</p></div>
+  {% endif %}
+</div>
+{% endblock %}

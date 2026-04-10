@@ -1,0 +1,62 @@
+{% extends 'user_layout.html' %}
+{% block title %}Payment Receipt{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>Payment Receipt</h1><p>Your payment confirmation</p></div>
+  <div style="display:flex;gap:0.75rem;">
+    <button onclick="window.print()" class="btn btn-outline-blue"><i class="fas fa-print"></i> Print</button>
+    <a href="/my_bills" class="btn btn-blue"><i class="fas fa-arrow-left"></i> Back to Bills</a>
+  </div>
+</div>
+
+<div style="max-width:600px;margin:0 auto;" id="receipt">
+  <div class="card">
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#0e63d2,#0047ab);border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1.5rem;color:#fff;">
+      <div style="width:60px;height:60px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.75rem;font-size:1.5rem;">
+        <i class="fas fa-check"></i>
+      </div>
+      <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:4px;">Payment Successful!</h2>
+      <p style="opacity:0.8;font-size:0.875rem;">Your water bill has been paid</p>
+      <div style="font-family:'Sora',sans-serif;font-size:2.5rem;font-weight:900;margin-top:0.75rem;">₹{{ bill.amount_paid or bill.amount_due }}</div>
+    </div>
+
+    <!-- Receipt Details -->
+    <div style="display:flex;flex-direction:column;gap:0;border:1px solid #f0f4ff;border-radius:12px;overflow:hidden;">
+      {% for label,val in [
+        ('Receipt No.','RCP-'+bill.payment_id|string if bill.payment_id else 'N/A'),
+        ('Citizen Name', bill.name),
+        ('Phone', bill.phone),
+        ('Ward', bill.ward_name or '—'),
+        ('Connection Type', bill.connection_type or '—'),
+        ('Meter Number', bill.meter_number or '—'),
+        ('Billing Month', bill.billing_month),
+        ('Units Consumed', bill.total_units|string+' units'),
+        ('Amount Due', '₹'+bill.amount_due|string),
+        ('Payment Date', bill.payment_date|string if bill.payment_date else 'N/A'),
+        ('Payment Mode', bill.payment_mode or 'QR Code'),
+        ('Payment Status', bill.payment_status or 'Success')
+      ] %}
+      <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #f0f4ff;{% if loop.last %}border-bottom:none;{% endif %}{% if loop.index is odd %}background:#fafbff;{% endif %}">
+        <span style="font-size:0.8rem;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">{{ label }}</span>
+        <span style="font-size:0.875rem;font-weight:700;color:#0a0f1e;">{{ val }}</span>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align:center;margin-top:1.5rem;padding-top:1rem;border-top:2px dashed #e8eef8;">
+      <p style="font-size:0.78rem;color:#aaa;">Thank you for paying your water bill!</p>
+      <p style="font-size:0.72rem;color:#bbb;margin-top:4px;">Gadag City Municipal Corporation — Water Supply Department</p>
+    </div>
+  </div>
+</div>
+
+<style>
+@media print {
+  .sidebar, .topbar, nav, footer { display: none !important; }
+  .main { padding: 0 !important; }
+  #receipt { max-width: 100% !important; }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'user_layout.html' %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+
+<div class="topbar">
+  <div class="page-title">
+    <h1>Notifications</h1>
+    <p>All your recent notifications</p>
+  </div>
+  <a href="/user_dashboard" class="btn btn-outline-blue">
+    <i class="fas fa-arrow-left"></i> Back
+  </a>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    <h3><i class="fas fa-bell" style="color:#0e63d2;"></i> All Notifications</h3>
+  </div>
+
+  {% if notifications %}
+  <div style="display:flex;flex-direction:column;gap:0.75rem;padding:1rem;">
+    {% for n in notifications %}
+    <div style="display:flex;align-items:flex-start;gap:1rem;padding:1rem;border-radius:12px;background:{% if n.read_status=='Unread' %}#f0f6ff{% else %}#f9f9f9{% endif %};border:1px solid {% if n.read_status=='Unread' %}#cce0ff{% else %}#eee{% endif %};">
+      
+      <!-- Icon -->
+      <div style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+        background:{% if n.notification_type=='Bill' %}rgba(14,99,210,0.1){% elif n.notification_type=='Payment' %}rgba(0,180,140,0.1){% elif n.notification_type=='Complaint' %}rgba(220,50,50,0.1){% else %}rgba(100,100,200,0.1){% endif %};">
+        <i class="fas {% if n.notification_type=='Bill' %}fa-file-invoice{% elif n.notification_type=='Payment' %}fa-rupee-sign{% elif n.notification_type=='Complaint' %}fa-exclamation-circle{% else %}fa-bell{% endif %}"
+          style="color:{% if n.notification_type=='Bill' %}#0e63d2{% elif n.notification_type=='Payment' %}#00b48c{% elif n.notification_type=='Complaint' %}#dc3232{% else %}#6464c8{% endif %};"></i>
+      </div>
+
+      <!-- Message -->
+      <div style="flex:1;">
+        <p style="font-size:0.88rem;font-weight:600;color:#0a1628;margin-bottom:4px;">{{ n.message }}</p>
+        <p style="font-size:0.72rem;color:#9ab0cc;">{{ n.created_at.strftime('%d %b %Y, %I:%M %p') }}</p>
+      </div>
+
+      <!-- Unread dot -->
+      {% if n.read_status == 'Unread' %}
+      <div style="width:8px;height:8px;background:#0e63d2;border-radius:50%;margin-top:6px;flex-shrink:0;"></div>
+      {% endif %}
+
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <i class="fas fa-bell-slash"></i>
+    <p>No notifications yet.</p>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

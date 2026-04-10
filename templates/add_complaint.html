@@ -1,0 +1,35 @@
+{% extends 'user_layout.html' %}
+{% block title %}Add Complaint{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div class="page-title"><h1>File a Complaint</h1><p>Report a water-related issue</p></div>
+  <a href="/my_requests" class="btn btn-outline-blue"><i class="fas fa-arrow-left"></i> Back</a>
+</div>
+<div class="card" style="max-width:600px;">
+  <div class="card-head"><h3><i class="fas fa-comment-dots" style="color:#dc3232;"></i> New Complaint</h3></div>
+  {% with messages = get_flashed_messages() %}{% if messages %}{% for msg in messages %}<div class="flash-msg flash-danger"><i class="fas fa-exclamation-circle"></i> {{ msg }}</div>{% endfor %}{% endif %}{% endwith %}
+  <form method="POST" action="/add_complaint">
+    <div class="field-group">
+      <label class="field-label">Complaint Type</label>
+      <select name="complaint_type" class="field-input" required>
+        <option value="">Select type</option>
+        <option>No Water Supply</option>
+        <option>Low Water Pressure</option>
+        <option>Pipe Leakage</option>
+        <option>Contaminated Water</option>
+        <option>Billing Error</option>
+        <option>Meter Issue</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Description</label>
+      <textarea name="description" class="field-input" rows="5" placeholder="Describe your issue in detail..." required></textarea>
+    </div>
+    <div style="display:flex;gap:1rem;">
+      <button type="submit" class="btn btn-red" style="flex:1;justify-content:center;padding:12px;"><i class="fas fa-paper-plane"></i> Submit Complaint</button>
+      <a href="/user_dashboard" class="btn btn-outline-blue" style="padding:12px 20px;">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
