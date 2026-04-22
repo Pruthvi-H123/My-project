@@ -37,6 +37,16 @@
             <p style="font-size:0.68rem;color:#9ab0cc;">Administrator</p>
           </div>
         </div>
+
+        <!-- Bell Notification -->
+        <a href="/admin/notifications" style="position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f8faff;border-radius:10px;border:1px solid #e8eef8;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='#f0a000'" onmouseout="this.style.borderColor='#e8eef8'">
+          <i class="fas fa-bell" style="color:#f0a000;font-size:1rem;"></i>
+          {% if unread_count > 0 %}
+          <span style="position:absolute;top:-5px;right:-5px;background:#dc3232;color:#fff;font-size:0.6rem;font-weight:800;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">{{ unread_count }}</span>
+          {% endif %}
+
+        </a>
+        
         <!-- Logout Button -->
         <a href="/logout" style="display:flex;align-items:center;gap:7px;padding:9px 16px;background:rgba(220,50,50,0.08);border:1.5px solid rgba(220,50,50,0.2);border-radius:10px;color:#dc3232;font-weight:700;font-size:0.82rem;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(220,50,50,0.15)'" onmouseout="this.style.background='rgba(220,50,50,0.08)'">
           <i class="fas fa-sign-out-alt"></i> Logout

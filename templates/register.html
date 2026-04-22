@@ -149,9 +149,10 @@
         <!-- Password -->
         <div class="form-group">
           <label class="form-label">Password</label>
-          <div class="input-wrap">
+          <div class="input-wrap" style="position:relative;">
             <i class="fas fa-lock"></i>
-            <input type="password" id="password" name="password" class="form-input" placeholder="Min. 8 characters" required/>
+            <input type="password" id="password" name="password" class="form-input" placeholder="Min. 8 characters" required style="padding-right:42px;"/>
+            <i class="fas fa-eye" id="togglePass1" onclick="togglePass('password','togglePass1')" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ab0cc;font-size:0.9rem;"></i>
           </div>
           <!-- Password strength bar -->
           <div style="margin-top:8px;">
@@ -166,9 +167,10 @@
         <!-- Confirm Password -->
         <div class="form-group">
           <label class="form-label">Confirm Password</label>
-          <div class="input-wrap">
+          <div class="input-wrap" style="position:relative;">
             <i class="fas fa-lock"></i>
-            <input type="password" name="confirm_password" id="confirm_password" class="form-input" placeholder="Re-enter your password" required/>
+            <input type="password" name="confirm_password" id="confirm_password" class="form-input" placeholder="Re-enter your password" required style="padding-right:42px;"/>
+            <i class="fas fa-eye" id="togglePass2" onclick="togglePass('confirm_password','togglePass2')" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ab0cc;font-size:0.9rem;"></i>
           </div>
           <p id="passwordMsg" style="font-size:0.75rem;margin-top:5px;display:none;"></p>
           <small id="confirmErr" class="val-msg"></small>
@@ -375,6 +377,13 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
   }
 });
 </script>
+
+<div class="input-wrap" style="position:relative;">
+  <i class="fas fa-lock"></i>
+  <input type="password" name="confirm_password" id="confirm_password" class="form-input" placeholder="Re-enter your password" required style="padding-right:42px;"/>
+  <i class="fas fa-eye" id="togglePass2" onclick="togglePass('confirm_password','togglePass2')" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ab0cc;font-size:0.9rem;"></i>
+</div>
+
 
 </body>
 </html>
